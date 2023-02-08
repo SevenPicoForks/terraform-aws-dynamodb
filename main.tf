@@ -1,5 +1,5 @@
 locals {
-  enabled = module.this.enabled
+  enabled = module.context.enabled
 
   attributes = concat(
     [
@@ -45,7 +45,7 @@ resource "null_resource" "local_secondary_index_names" {
 
 resource "aws_dynamodb_table" "default" {
   count            = local.enabled ? 1 : 0
-  name             = module.this.id
+  name             = module.context.id
   billing_mode     = var.billing_mode
   read_capacity    = var.billing_mode == "PAY_PER_REQUEST" ? null : var.autoscale_min_read_capacity
   write_capacity   = var.billing_mode == "PAY_PER_REQUEST" ? null : var.autoscale_min_write_capacity
@@ -122,7 +122,7 @@ resource "aws_dynamodb_table" "default" {
     }
   }
 
-  tags = var.tags_enabled ? module.this.tags : null
+  tags = var.tags_enabled ? module.context.tags : null
 }
 
 module "dynamodb_autoscaler" {
@@ -130,8 +130,8 @@ module "dynamodb_autoscaler" {
   version = "0.14.0"
   enabled = local.enabled && var.enable_autoscaler && var.billing_mode == "PROVISIONED"
 
-  attributes                   = concat(module.this.attributes, var.autoscaler_attributes)
-  tags                         = var.tags_enabled ? merge(module.this.tags, var.autoscaler_tags) : null
+  attributes                   = concat(module.context.attributes, var.autoscaler_attributes)
+  tags                         = var.tags_enabled ? merge(module.context.tags, var.autoscaler_tags) : null
   dynamodb_table_name          = join("", aws_dynamodb_table.default.*.id)
   dynamodb_table_arn           = join("", aws_dynamodb_table.default.*.arn)
   dynamodb_indexes             = null_resource.global_secondary_index_names.*.triggers.name
@@ -142,5 +142,5 @@ module "dynamodb_autoscaler" {
   autoscale_min_write_capacity = var.autoscale_min_write_capacity
   autoscale_max_write_capacity = var.autoscale_max_write_capacity
 
-  context = module.this.context
+  context = module.context.self
 }
