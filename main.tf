@@ -142,5 +142,6 @@ module "dynamodb_autoscaler" {
   autoscale_min_write_capacity = var.autoscale_min_write_capacity
   autoscale_max_write_capacity = var.autoscale_max_write_capacity
 
-  context = module.context.self
+  #Fixme
+  context = module.context.legacy
 }
