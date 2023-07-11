@@ -44,6 +44,7 @@ resource "null_resource" "local_secondary_index_names" {
 }
 
 resource "aws_dynamodb_table" "default" {
+  #checkov:skip=CKV2_AWS_16:skipping 'Ensure that Auto Scaling is enabled on your DynamoDB tables' as it is enabled through 'dynamodb_autoscaler' module
   count            = local.enabled ? 1 : 0
   name             = module.context.id
   billing_mode     = var.billing_mode
