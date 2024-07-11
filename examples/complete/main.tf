@@ -1,7 +1,3 @@
-provider "aws" {
-  region = var.region
-}
-
 module "dynamodb_table_1" {
   source = "../../"
 
