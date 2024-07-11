@@ -1,7 +1,3 @@
-provider "aws" {
-  region = var.region
-}
-
 module "dynamodb_table_1" {
   source = "../../"
 
@@ -52,7 +48,7 @@ module "dynamodb_table_1" {
     }
   ]
 
-  context = module.this.context
+  context = module.context.self
 }
 
 module "dynamodb_table_2" {
@@ -105,5 +101,5 @@ module "dynamodb_table_2" {
     }
   ]
 
-  context = module.this.context
+  context = module.context.self
 }
