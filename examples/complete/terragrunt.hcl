@@ -72,27 +72,22 @@ generate "providers" {
   if_exists = "overwrite"
   contents  = <<EOF
   terraform {
+    required_version = ">= 0.13.0"
+
     required_providers {
       aws = {
         source  = "hashicorp/aws"
-        version = "~> 4"
+        version = ">= 2.0"
       }
-      local = {
-        source  = "hashicorp/local"
-      }
-      acme = {
-        source  = "vancluever/acme"
-        version = "~> 2.8.0"
+      null = {
+        source  = "hashicorp/null"
+        version = ">= 2.0"
       }
     }
   }
 
   provider "aws" {
     region  = "${local.region}"
-  }
-
-  provider "acme" {
-    server_url = "https://acme-v02.api.letsencrypt.org/directory"
   }
   EOF
 }
