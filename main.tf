@@ -109,7 +109,7 @@ resource "aws_dynamodb_table" "default" {
     content {
       region_name = replica.value
       # If kms_key_arn is null, the provider uses the default key
-      kms_key_arn            = null
+      kms_key_arn            = length(var.replicas) > 0 ? var.replica_kms_key_arn : null
       propagate_tags         = false
       point_in_time_recovery = false
     }
