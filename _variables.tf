@@ -174,3 +174,18 @@ variable "table_class" {
   default     = "STANDARD"
   description = "DynamoDB storage class of the table. Can be STANDARD or STANDARD_INFREQUENT_ACCESS"
 }
+
+variable "replicas_kms_key_arn" {
+  type    = string
+  default = null
+}
+
+variable "replicas_point_in_time_recovery" {
+  type    = bool
+  default = false
+}
+
+variable "replicas_propagate_tags" {
+  type    = bool
+  default = false
+}
