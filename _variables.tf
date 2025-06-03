@@ -175,17 +175,17 @@ variable "table_class" {
   description = "DynamoDB storage class of the table. Can be STANDARD or STANDARD_INFREQUENT_ACCESS"
 }
 
-variable "replica_kms_key_arn" {
+variable "replicas_kms_key_arn" {
   type    = string
   default = null
 }
 
-variable "replica_point_in_time_recovery" {
+variable "replicas_point_in_time_recovery" {
   type    = bool
   default = false
 }
 
-variable "replica_propagate_tags" {
+variable "replicas_propagate_tags" {
   type    = bool
   default = false
 }
